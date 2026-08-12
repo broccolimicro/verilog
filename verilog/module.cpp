@@ -141,7 +141,10 @@ int Module::netIndex(string name, bool define) {
 }
 
 string Module::netAt(int uid) const {
-	return nets[uid].name;
+	if (uid >= 0 and uid < (int)nets.size()) {
+		return nets[uid].name;
+	}
+	return "undef";
 }
 
 int Module::netCount() const {
