@@ -54,8 +54,9 @@ struct Channel {
 	enum Purpose {
 		IN = 0,
 		OUT = 1,
-		REG = 2,
-		COND = 3,
+		WIRE = 2,
+		REG = 3,
+		COND = 4,
 	};
 
 	int valid;
