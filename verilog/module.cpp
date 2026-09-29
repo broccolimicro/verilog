@@ -57,6 +57,18 @@ Operand Channel::getData() {
 	return Operand::varOf(data);
 }
 
+bool Channel::hasValid() const {
+	return valid >= 0;
+}
+
+bool Channel::hasReady() const {
+	return ready >= 0;
+}
+
+bool Channel::hasData() const {
+	return data >= 0;
+}
+
 Statement::Statement() {
 	net = -1;
 	blocking = true;

@@ -70,6 +70,10 @@ struct Channel {
 	Operand getValid();
 	Operand getReady();
 	Operand getData();
+
+	bool hasValid() const;
+	bool hasReady() const;
+	bool hasData() const;
 };
 
 struct Statement {
