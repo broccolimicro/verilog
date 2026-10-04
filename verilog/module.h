@@ -59,6 +59,7 @@ struct Channel {
 		COND = 4,
 	};
 
+	std::string name;
 	int valid;
 	int ready;
 	int data;
@@ -75,6 +76,8 @@ struct Channel {
 	bool hasValid() const;
 	bool hasReady() const;
 	bool hasData() const;
+
+	auto operator<=>(const Channel &c1) const = default;
 };
 
 struct Statement {
@@ -134,7 +137,7 @@ struct Module {
 	vector<Trigger> triggers;
 	vector<Instance> inst;
 
-	Module();
+	Module(std::string name="");
 	~Module();
 
 	Operand getClk();

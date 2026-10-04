@@ -110,7 +110,8 @@ Instance::Instance(string type, vector<Expression> ports) {
 Instance::~Instance() {
 }
 
-Module::Module() {
+Module::Module(std::string name) {
+	this->name = name;
 	reset = -1;
 	clk = -1;
 }
