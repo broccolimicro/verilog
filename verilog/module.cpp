@@ -19,12 +19,14 @@ std::ostream& operator<<(std::ostream& os, const Type& type) {
 
 Net::Net() {
 	this->purpose = Purpose::WIRE;
+	this->chan = -1;
 }
 
-Net::Net(string name, clocked::Type type, Purpose purpose) {
+Net::Net(string name, clocked::Type type, Purpose purpose, int chan) {
 	this->name = name;
 	this->type = type;
 	this->purpose = purpose;
+	this->chan = chan;
 }
 
 Net::~Net() {
@@ -36,25 +38,37 @@ std::ostream& operator<<(std::ostream& os, const Net& net) {
               << ", purpose = " << net.purpose << ")";
 }
 
-Channel::Channel() {
+Channel::Channel(std::string name, Purpose purpose) {
+	this->name = name;
+	this->purpose = purpose;
 	valid = -1;
 	ready = -1;
 	data = -1;
+	validReg = -1;
+	dataReg = -1;
 }
 
 Channel::~Channel() {
 }
 
-Operand Channel::getValid() {
+Operand Channel::getValid() const {
 	return Operand::varOf(valid);
 }
 
-Operand Channel::getReady() {
+Operand Channel::getReady() const {
 	return Operand::varOf(ready);
 }
 
-Operand Channel::getData() {
+Operand Channel::getData() const {
 	return Operand::varOf(data);
+}
+
+Operand Channel::getValidReg() const {
+	return Operand::varOf(validReg);
+}
+
+Operand Channel::getDataReg() const {
+	return Operand::varOf(dataReg);
 }
 
 bool Channel::hasValid() const {
@@ -164,9 +178,9 @@ int Module::netCount() const {
 	return (int)nets.size();
 }
 
-size_t Module::pushNet(string name, Type type, Net::Purpose purpose) {
+size_t Module::pushNet(string name, Type type, Net::Purpose purpose, int chan) {
 	size_t index = (size_t)nets.size();
-	nets.push_back(Net(name, type, purpose));
+	nets.push_back(Net(name, type, purpose, chan));
 	return index;
 }
 

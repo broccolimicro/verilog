@@ -41,9 +41,10 @@ struct Net {
 	string name;
 	Type type;
 	Purpose purpose;
+	int chan;
 
 	Net();
-	Net(string name, Type type=Type(Type::TypeName::BITS, 1), Purpose purpose=Purpose::WIRE);
+	Net(string name, Type type=Type(Type::TypeName::BITS, 1), Purpose purpose=Purpose::WIRE, int chan=-1);
 	~Net();
 
 	auto operator<=>(const Net &n) const = default;
@@ -64,14 +65,19 @@ struct Channel {
 	int ready;
 	int data;
 
+	int validReg;
+	int dataReg;
+
 	Purpose purpose;
 
-	Channel();
+	Channel(std::string name="", Purpose purpose=WIRE);
 	~Channel();
 
-	Operand getValid();
-	Operand getReady();
-	Operand getData();
+	Operand getValid() const;
+	Operand getReady() const;
+	Operand getData() const;
+	Operand getValidReg() const;
+	Operand getDataReg() const;
 
 	bool hasValid() const;
 	bool hasReady() const;
@@ -148,7 +154,7 @@ struct Module {
 	string netAt(int uid) const;
 	int netCount() const;
 
-	size_t pushNet(string name, Type type=Type(Type::TypeName::BITS, 1), Net::Purpose purpose=Net::Purpose::WIRE);
+	size_t pushNet(string name, Type type=Type(Type::BITS, 1), Net::Purpose purpose=Net::WIRE, int chan=-1);
 };
 
 }
